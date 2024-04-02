@@ -1,0 +1,148 @@
+@charset 'utf-8';
+
+:root {
+    --color: #1c1a10;
+    --char-size: 80px;
+    --clr: 0;
+    --stage-color: hsl(var(--clr), 50%, 50%);
+    --stage-font-color: #fff;
+    --bg-color: hsl(var(--clr), 50%, 85%);
+    --highlight-color: var(--stage-font-color);
+}
+
+body {
+    font-family: 'Comfortaa', 'Open Sans', Arial, sans-serif;
+    font-weight: 300;
+    background-color: var(--bg-color);
+    color: var(--color);
+    transition: all 0.2s ease-in-out;
+    user-select: none;
+}
+
+/* 
+    Utility classes 
+*/
+.grid {display: grid;}
+.grid-center {place-items: center;}
+.flex { display: flex;}
+.flex-sb {justify-content: space-between;}
+.hidden { visibility: hidden;}
+
+/*
+    Main
+*/
+
+main > section {
+    text-align: center;
+    margin-top: 15%;
+    justify-content: center;
+    gap: 20px;
+}
+
+.info {
+    font-size: 20px;
+    color: var(--stage-font-color);
+    font-weight: 600;
+    letter-spacing: 2px;
+    visibility: hidden;
+    li {
+        list-style: none;
+    }
+}
+
+.stage {
+    min-height: var(--char-size);
+}
+
+input {
+    padding: 15px;
+    font-size: 20px;
+    border: 0;
+    text-align: center;
+    display: block;
+    color: var(--stage-font-color);
+    letter-spacing: 2px;
+    &[type="text"] {
+        pointer-events: none;
+        visibility: hidden;
+    }
+    &[type="button"] {
+        padding: 15px 30px;
+        font-weight: 600;
+        background-color: var(--highlight-color);
+        color: var(--stage-color);
+        transition: all 0.3s ease-in-out;
+        justify-self: center;
+        &:hover {
+            background-color: var(--stage-color);
+            color: var(--highlight-color);
+        }
+    }
+}
+
+
+.gaming {
+    input[type="text"] {
+        pointer-events: all;
+        background-color: var(--stage-color);
+        visibility: visible;
+    }
+    input[type="button"] {
+        visibility: hidden;
+    }
+    .info {
+        visibility: visible;
+    }
+}
+
+.char {
+    color: var(--stage-font-color);
+    width: var(--char-size);
+    height: var(--char-size);
+    line-height: var(--char-size);
+    font-size: calc(var(--char-size) * 0.5);
+    background-color: var(--stage-color);
+    display: inline-block;
+    visibility: hidden;
+    animation-duration: 0.2s;
+    animation-timing-function: ease-in-out;
+    transform-origin: 50% 50%;
+    &.in {
+        animation-name: scaleIn;
+    }
+    &.out {
+        animation-name: scaleOut;
+    }
+    &.visible {
+        visibility: visible;
+    }
+    &.blur {
+        filter: blur(5px);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(2);
+        filter: blur(60px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0px);
+    }
+}
+
+@keyframes scaleOut {
+    from {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0px);
+    }
+    to {
+        opacity: 0;
+        transform: scale(2);
+        filter: blur(30px);
+    }
+}
