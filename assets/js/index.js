@@ -5,28 +5,29 @@ import { query, event, cssVar } from './Utils.js';
 
 const words =
     ['dinosaur', 'love', 'pineapple', 'calendar', 'robot', 'building', 'population',
-    'weather', 'bottle', 'history', 'dream', 'character', 'money', 'absolute',
-    'discipline', 'machine', 'accurate', 'connection', 'rainbow', 'bicycle',
-    'eclipse', 'calculator', 'trouble', 'watermelon', 'developer', 'philosophy',
-    'database', 'periodic', 'capitalism', 'abominable', 'component', 'future',
-    'pasta', 'microwave', 'jungle', 'wallet', 'canada', 'coffee', 'beauty', 'agency',
-    'chocolate', 'eleven', 'technology', 'alphabet', 'knowledge', 'magician',
-    'professor', 'triangle', 'earthquake', 'baseball', 'beyond', 'evolution',
-    'banana', 'perfumer', 'computer', 'management', 'discovery', 'ambition', 'music',
-    'eagle', 'crown', 'chess', 'laptop', 'bedroom', 'delivery', 'enemy', 'button',
-    'superman', 'library', 'unboxing', 'bookstore', 'language', 'homework',
-    'fantastic', 'economy', 'interview', 'awesome', 'challenge', 'science', 'mystery',
-    'famous', 'league', 'memory', 'leather', 'planet', 'software', 'update', 'yellow',
-    'keyboard', 'window'];
+        'weather', 'bottle', 'history', 'dream', 'character', 'money', 'absolute',
+        'discipline', 'machine', 'accurate', 'connection', 'rainbow', 'bicycle',
+        'eclipse', 'calculator', 'trouble', 'watermelon', 'developer', 'philosophy',
+        'database', 'periodic', 'capitalism', 'abominable', 'component', 'future',
+        'pasta', 'microwave', 'jungle', 'wallet', 'canada', 'coffee', 'beauty', 'agency',
+        'chocolate', 'eleven', 'technology', 'alphabet', 'knowledge', 'magician',
+        'professor', 'triangle', 'earthquake', 'baseball', 'beyond', 'evolution',
+        'banana', 'perfumer', 'computer', 'management', 'discovery', 'ambition', 'music',
+        'eagle', 'crown', 'chess', 'laptop', 'bedroom', 'delivery', 'enemy', 'button',
+        'superman', 'library', 'unboxing', 'bookstore', 'language', 'homework',
+        'fantastic', 'economy', 'interview', 'awesome', 'challenge', 'science', 'mystery',
+        'famous', 'league', 'memory', 'leather', 'planet', 'software', 'update', 'yellow',
+        'keyboard', 'window'];
 
-const TIME_LIMIT = 20;
+const TIME_LIMIT = 99;
+const WORD_TIME_LIMIT = 5;
 const bgSnd = new Audio('assets/snd/bg.mp3', { loop: true });
 const btn = query('input[type="button"]');
 const input = query('input[type="text"]');
 const stage = query('section > div');
 const info = query('.info');
 const gameContainer = query('body');
-const gameData = { reset: function () { this.timeId = 0; this.words = []; this.time = 0; this.hits = 0 } };
+const gameData = { reset: function () { this.autoId = 0; this.timeId = 0; this.words = []; this.time = 0; this.hits = 0; this.counter = 0; return this; } };
 
 function start() {
     reset();
@@ -51,6 +52,7 @@ function end() {
 function reset() {
     input.value = '';
     clearInterval(gameData.timeId);
+    clearInterval(gameData.autoId);
     gameContainer.classList.remove('gaming');
     gameData.reset();
     gameData.words = [...words].sort((a, b) => Math.random() < 0.5 ? -1 : 1);
@@ -70,18 +72,25 @@ function check(value) {
             transChar(query(`.char${i}`), ['out'], ['out', 'visible']);
     });
     if (value === word) {
-        gameData.words.shift();
         gameData.hits++;
         showWord();
     }
 }
 
 function showWord(word = '') {
-    if (word === '') word = gameData.words[0];
+    if (word === '') {
+        gameData.words.shift();
+        word = gameData.words[0];
+        clearInterval(gameData.autoId);
+        gameData.autoId = setInterval(() => {
+            stage.children[gameData.counter++].classList.add('pass');
+            if (gameData.counter >= stage.children.length) showWord();
+        }, WORD_TIME_LIMIT * 1000 / stage.children.length, gameData.counter = 0);
+    }
     input.value = '';
-    cssVar('--clr', Math.floor(Math.random() * 10) * 137.508);
+    cssVar('--clr', Math.floor(Math.random() * 100) * 137.508);
     stage.innerHTML = word.split('').map((char, i) => `<span class="char char${i}">${char}</span>`).join('');
-    transChars(['in', 'visible'], ['in']);
+    transChars(['in', 'visible'], ['in'], () => input.value = '');
 }
 
 function transChars(add = [], rm = [], call = null, step = 50) {
@@ -97,4 +106,5 @@ function transChar(char, add = [], rm = []) {
 event(btn, 'click', start);
 event(input, 'input', () => check(input.value));
 event(bgSnd, 'ended', () => bgSnd.play());
-showWord("Ready?");
+gameData.reset().timeId = setInterval(() => showWord('Ready?'), WORD_TIME_LIMIT * 1000);
+showWord('Ready?');

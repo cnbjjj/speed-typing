@@ -8,6 +8,7 @@
     --stage-font-color: #fff;
     --bg-color: hsl(var(--clr), 50%, 85%);
     --highlight-color: var(--stage-font-color);
+    --full-color: hsl(var(--clr), 80%, 70%);
 }
 
 body {
@@ -39,9 +40,24 @@ main > section {
     gap: 20px;
 }
 
+main > section::before {
+    content: '';
+    display: block;
+    height: 100vh;
+    aspect-ratio: 1 / 1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--bg-color);
+    z-index: -1;
+    border-radius: 50%;
+    transition: all 0.1s ease-in-out;
+}
+
 .info {
     font-size: 20px;
-    color: var(--stage-font-color);
+    color: var(--stage-color);
     font-weight: 600;
     letter-spacing: 2px;
     visibility: hidden;
@@ -107,6 +123,8 @@ input {
     animation-duration: 0.2s;
     animation-timing-function: ease-in-out;
     transform-origin: 50% 50%;
+    border-top: 10px solid var(--full-color);
+    box-sizing: content-box;
     &.in {
         animation-name: scaleIn;
     }
@@ -118,6 +136,9 @@ input {
     }
     &.blur {
         filter: blur(5px);
+    }
+    &.pass {
+        border-color: var(--bg-color);
     }
 }
 
