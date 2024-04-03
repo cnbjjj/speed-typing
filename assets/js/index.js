@@ -19,7 +19,7 @@ const words =
     'famous', 'league', 'memory', 'leather', 'planet', 'software', 'update', 'yellow',
     'keyboard', 'window'];
 
-const TIME_LIMIT = 10;
+const TIME_LIMIT = 99;
 const WORD_TIME_LIMIT = 5;
 const bgSnd = new Audio('assets/snd/bg.mp3', { loop: true });
 const btn = query('input[type="button"]');
