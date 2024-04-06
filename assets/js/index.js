@@ -141,7 +141,7 @@ function transChar(char, add = [], rm = []) {
 function toggleBillboard(param = {}) {
     query('.billboard').innerHTML = '';
     if (query('body').classList.toggle('records')) {
-        displayBillboard([...billboard].splice(0, 10));
+        displayBillboard([...billboard].splice(0, 5));
     } else {
         showWord(param);
     }
