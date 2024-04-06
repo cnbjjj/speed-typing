@@ -17,4 +17,7 @@ function shuffle(array) {
     }
     return array;
 }
-export {query, event, cssVar, shuffle};
+function log(...args) {
+    console.log(...args);
+}
+export {query, event, cssVar, shuffle, log};

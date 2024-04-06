@@ -4,11 +4,14 @@
     --color: #1c1a10;
     --char-size: 80px;
     --clr: 0;
-    --stage-color: hsl(var(--clr), 50%, 50%);
+    --hue: calc(var(--clr) * 137.508);
+    --stage-color: hsl(var(--hue), 50%, 50%);
     --stage-font-color: #fff;
-    --bg-color: hsl(var(--clr), 50%, 85%);
+    --bg-color: hsl(var(--hue), 50%, 85%);
     --highlight-color: var(--stage-font-color);
-    --full-color: hsl(var(--clr), 80%, 70%);
+    --full-color: hsl(var(--hue), 80%, 70%);
+    --offset-x: 50%;
+    --offset-y: 50%;
 }
 
 body {
@@ -18,6 +21,8 @@ body {
     color: var(--color);
     transition: all 0.2s ease-in-out;
     user-select: none;
+    overflow: hidden;
+    text-align: center;
 }
 
 /* 
@@ -28,14 +33,19 @@ body {
 .flex { display: flex;}
 .flex-sb {justify-content: space-between;}
 .hidden { visibility: hidden;}
+.full-h {height: 100vh;}
 
 /*
     Main
 */
 
+main {
+    animation: scaleIn 0.2s ease-in-out forwards;
+    pointer-events: all;
+}
+
 main > section {
     text-align: center;
-    margin-top: 15%;
     justify-content: center;
     gap: 20px;
 }
@@ -46,8 +56,8 @@ main > section::before {
     height: 100vh;
     aspect-ratio: 1 / 1;
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: var(--offset-y);
+    left: var(--offset-x);
     transform: translate(-50%, -50%);
     background-color: var(--bg-color);
     z-index: -1;
@@ -73,11 +83,11 @@ main > section::before {
 input {
     padding: 15px;
     font-size: 20px;
-    border: 0;
     text-align: center;
     display: block;
     color: var(--stage-font-color);
     letter-spacing: 2px;
+    border: 0;
     &[type="text"] {
         pointer-events: none;
         visibility: hidden;
@@ -111,6 +121,7 @@ input {
 }
 
 .char {
+    --group-color: hsl(calc(var(--group) * 137.508), 50%, 70%);
     color: var(--stage-font-color);
     width: var(--char-size);
     height: var(--char-size);
@@ -139,6 +150,61 @@ input {
     &.pass {
         border-color: var(--bg-color);
     }
+    &.board {
+        border-color:var(--bg-color);
+        background-color: var(--group-color);
+    }
+    &.first {
+        background-color: var(--bg-color);
+        color: var(--group-color);
+        border-color: var(--group-color);
+    }
+}
+
+.ranking {
+    width: 40px;
+    justify-self: center;
+    position: absolute;
+    cursor: pointer;
+    padding: 5px;
+    background-color: var(--stage-color);
+    border-top: 5px solid var(--full-color);
+    display: none;
+}
+
+.result {
+    /* cursor: url('../img/ranking_yellow.png'), auto; */
+    .ranking {
+        display: block;
+        animation: scaleIn 0.2s ease-in-out forwards;
+    }
+}
+
+.billboard {
+    display: inline-grid;
+    grid-template-columns: repeat(auto-fill, minmax(var(--char-size), 1fr));
+    width: calc(var(--char-size)*12);
+    background-color: var(--bg-color);
+    animation: scaleOut 0.2s ease-in-out forwards;
+}
+
+.records {
+    cursor: url('../img/back.png'), auto;
+    .billboard {
+        animation: scaleIn 0.2s ease-in-out forwards;
+    }
+    main {
+        animation: scaleOut 0.2s ease-in-out forwards;
+        pointer-events: none;
+    }
+}
+
+.scaleOut {
+    animation: scaleOut 0.2s ease-in-out forwards;
+}
+
+.scaleIn {
+    animation: scaleIn 0.2s ease-in-out forwards;
 }
 
 @keyframes scaleIn {
