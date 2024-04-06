@@ -6,7 +6,7 @@
     --clr: 0;
     --hue: calc(var(--clr) * 137.508);
     --stage-color: hsl(var(--hue), 50%, 50%);
-    --stage-font-color: #fff;
+    --stage-font-color: #fcfcfc;
     --bg-color: hsl(var(--hue), 50%, 85%);
     --highlight-color: var(--stage-font-color);
     --full-color: hsl(var(--hue), 80%, 70%);
@@ -87,7 +87,7 @@ input {
     display: block;
     color: var(--stage-font-color);
     letter-spacing: 2px;
-    border: 0;
+    border-top: 10px solid var(--full-color);
     &[type="text"] {
         pointer-events: none;
         visibility: hidden;
@@ -153,6 +153,9 @@ input {
     &.board {
         /* border-color:var(--bg-color); */
         background-color: var(--stage-color);
+        &:hover {
+            background-color: var(--full-color);
+        }
     }
     &.first {
         background-color: var(--bg-color);
@@ -165,12 +168,12 @@ input {
 .ranking {
     width: 40px;
     justify-self: center;
-    position: absolute;
     cursor: pointer;
     padding: 5px;
-    background-color: var(--stage-color);
+    margin-top: 40px;
     border-top: 5px solid var(--full-color);
-    display: none;
+    visibility: hidden;
+    transition: all 0.3s ease-in-out;
 }
 
 .result {
@@ -180,8 +183,11 @@ input {
         cursor: grabbing;
     }
     .ranking {
-        display: block;
+        visibility: visible;
         animation: scaleIn 0.2s ease-in-out forwards;
+        &:hover {
+            background-color: var(--stage-color);
+        }
     }
 }
 
