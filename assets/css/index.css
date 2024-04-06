@@ -173,7 +173,11 @@ input {
 }
 
 .result {
-    /* cursor: url('../img/ranking_yellow.png'), auto; */
+    /* cursor: url('../img/ranking.png'), auto; */
+    cursor: grab;
+    &:active {
+        cursor: grabbing;
+    }
     .ranking {
         display: block;
         animation: scaleIn 0.2s ease-in-out forwards;
@@ -193,7 +197,10 @@ input {
 }
 
 .records {
-    cursor: url('../img/back.png'), auto;
+    cursor: grab;
+    &:active {
+        cursor: grabbing;
+    }
     .billboard {
         animation: scaleIn 0.2s ease-in-out forwards;
     }
