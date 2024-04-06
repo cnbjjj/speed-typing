@@ -6,7 +6,7 @@
     --clr: 0;
     --hue: calc(var(--clr) * 137.508);
     --stage-color: hsl(var(--hue), 50%, 50%);
-    --stage-font-color: #fcfcfc;
+    --stage-font-color: #fdfdfd;
     --bg-color: hsl(var(--hue), 50%, 85%);
     --highlight-color: var(--stage-font-color);
     --full-color: hsl(var(--hue), 80%, 70%);
