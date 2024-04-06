@@ -4,19 +4,19 @@ import { query, event, cssVar, shuffle, log } from './utils.js';
 
 const words =
     ['dinosaur', 'love', 'pineapple', 'calendar', 'robot', 'building', 'population',
-        'weather', 'bottle', 'history', 'dream', 'character', 'money', 'absolute',
-        'discipline', 'machine', 'accurate', 'connection', 'rainbow', 'bicycle',
-        'eclipse', 'calculator', 'trouble', 'watermelon', 'developer', 'philosophy',
-        'database', 'periodic', 'capitalism', 'abominable', 'component', 'future',
-        'pasta', 'microwave', 'jungle', 'wallet', 'canada', 'coffee', 'beauty', 'agency',
-        'chocolate', 'eleven', 'technology', 'alphabet', 'knowledge', 'magician',
-        'professor', 'triangle', 'earthquake', 'baseball', 'beyond', 'evolution',
-        'banana', 'perfumer', 'computer', 'management', 'discovery', 'ambition', 'music',
-        'eagle', 'crown', 'chess', 'laptop', 'bedroom', 'delivery', 'enemy', 'button',
-        'superman', 'library', 'unboxing', 'bookstore', 'language', 'homework',
-        'fantastic', 'economy', 'interview', 'awesome', 'challenge', 'science', 'mystery',
-        'famous', 'league', 'memory', 'leather', 'planet', 'software', 'update', 'yellow',
-        'keyboard', 'window'];
+    'weather', 'bottle', 'history', 'dream', 'character', 'money', 'absolute',
+    'discipline', 'machine', 'accurate', 'connection', 'rainbow', 'bicycle',
+    'eclipse', 'calculator', 'trouble', 'watermelon', 'developer', 'philosophy',
+    'database', 'periodic', 'capitalism', 'abominable', 'component', 'future',
+    'pasta', 'microwave', 'jungle', 'wallet', 'canada', 'coffee', 'beauty', 'agency',
+    'chocolate', 'eleven', 'technology', 'alphabet', 'knowledge', 'magician',
+    'professor', 'triangle', 'earthquake', 'baseball', 'beyond', 'evolution',
+    'banana', 'perfumer', 'computer', 'management', 'discovery', 'ambition', 'music',
+    'eagle', 'crown', 'chess', 'laptop', 'bedroom', 'delivery', 'enemy', 'button',
+    'superman', 'library', 'unboxing', 'bookstore', 'language', 'homework',
+    'fantastic', 'economy', 'interview', 'awesome', 'challenge', 'science', 'mystery',
+    'famous', 'league', 'memory', 'leather', 'planet', 'software', 'update', 'yellow',
+    'keyboard', 'window'];
 
 const TIME_LIMIT = 10;
 const WORD_TIME_LIMIT = 5;
@@ -70,9 +70,9 @@ function end() {
             btn.value = 'Try again?';
             reset();
             gameContainer.classList.add('result');
-            const word = `#${order}_${record.hits}/${record.total}`;
+            const word = `#${order}_${record.hits}Hits`;
             gameData.welcome = word;
-            showWord({ word: word, display: true });
+            showWord({ word: word, freq: 4, display: true });
         }
     });
     bgSnd.pause();
@@ -154,7 +154,7 @@ function displayBillboard(records) {
         billboardStr += str.split('').map((char, i) => `<span style="--group:${rid}" class="${i === 0 ? 'first' : ''} board char char${i}">${char}</span>`).join('');
     });
     query('.billboard').innerHTML = billboardStr;
-    showWord({ word: billboardStr, freq: 10, step: 25, container: query('.billboard'), gen: false, display: true });
+    showWord({ word: billboardStr, freq: 6, step: 30, container: query('.billboard'), gen: false, display: true });
 }
 
 function setRecord(record) {
@@ -173,4 +173,4 @@ event(document, 'click', (e) => {
     if (e.target !== btn && gameContainer.classList.contains('result'))
         toggleBillboard({ word: gameData.welcome, display: true });
 });
-showWord({ word: gameData.welcome, display: true });
+showWord({ word: gameData.welcome, freq:4, display: true });

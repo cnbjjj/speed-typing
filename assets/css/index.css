@@ -151,13 +151,14 @@ input {
         border-color: var(--bg-color);
     }
     &.board {
-        border-color:var(--bg-color);
-        background-color: var(--group-color);
+        /* border-color:var(--bg-color); */
+        background-color: var(--stage-color);
     }
     &.first {
         background-color: var(--bg-color);
-        color: var(--group-color);
-        border-color: var(--group-color);
+        color: var(--stage-color);
+        border-color: var(--bg-color);
+        font-weight: 700;
     }
 }
 
